@@ -1,16 +1,17 @@
+<!-- A copy of docs/05-prd-lead-quality-lens.md from the google-ads-b2b-teardown repository, used here as a real example. Relative links were rewritten to absolute URLs. -->
 # 5. PRD: Lead Quality Lens (concept)
 
 **Author:** Saksham · **Status:** concept for discussion · **As of:** 2026-11-04
 
-> This is an independent product concept written from public information. It is not Google's roadmap, I have no inside knowledge of Google's plans, and the name "Lead Quality Lens" is mine. Several assumptions below could be wrong; the ones I know about are listed in section 11 and tested in [07](07-interview-guide.md). I have not run user research for this document.
+> This is an independent product concept written from public information. It is not Google's roadmap, I have no inside knowledge of Google's plans, and the name "Lead Quality Lens" is mine. Several assumptions below could be wrong; the ones I know about are listed in section 11 and tested in [07](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/07-interview-guide.md). I have not run user research for this document.
 
 ## 1. Summary
 
-B2B advertisers increasingly hand targeting, creative and bidding to automation, but judge it on conversions that are often form fills. Google has built much of the plumbing to send later-stage outcomes back (see [2](02-what-google-shipped.md)), yet an advertiser still has no easy, trustworthy way to **see which parts of their spend produce qualified leads, and how sure the data is**. The Lead Quality Lens is a report that shows cost per qualified lead by search term, match source, asset, landing page and channel, flags where spend is not producing qualified leads, and is explicit about what is still too early or too thin to judge.
+B2B advertisers increasingly hand targeting, creative and bidding to automation, but judge it on conversions that are often form fills. Google has built much of the plumbing to send later-stage outcomes back (see [2](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/02-what-google-shipped.md)), yet an advertiser still has no easy, trustworthy way to **see which parts of their spend produce qualified leads, and how sure the data is**. The Lead Quality Lens is a report that shows cost per qualified lead by search term, match source, asset, landing page and channel, flags where spend is not producing qualified leads, and is explicit about what is still too early or too thin to judge.
 
 ## 2. Problem
 
-Evidence and counter-evidence are in [3](03-user-problems.md). The three problems this PRD targets:
+Evidence and counter-evidence are in [3](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/03-user-problems.md). The three problems this PRD targets:
 
 - **P1:** optimising to form fills attracts low-quality leads (Medium confidence).
 - **P2:** deep-funnel B2B signals are sparse and slow; the 63-day and 90-day upload windows mean some outcomes can never be attributed (Medium-high on structure).
@@ -40,7 +41,7 @@ Evidence and counter-evidence are in [3](03-user-problems.md). The three problem
 
 ## 5. Solution concept
 
-### 5.1 Phases (sequenced by the RICE ranking in [4](04-opportunities-and-prioritization.md))
+### 5.1 Phases (sequenced by the RICE ranking in [4](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/04-opportunities-and-prioritization.md))
 
 | Phase | Scope | Why this order |
 |---|---|---|
@@ -101,7 +102,7 @@ A model may write the summary sentences, with one hard rule: **every number in t
 
 ## 7. Success metrics
 
-Design, sample-size reasoning and decision rules are in [6](06-metrics-and-experiment-plan.md). The measures:
+Design, sample-size reasoning and decision rules are in [6](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/06-metrics-and-experiment-plan.md). The measures:
 
 - **Primary, leading: evidence-backed action rate.** The share of Lens-active accounts that act on a flagged segment within 14 days of first seeing it.
 - **Primary, lagging: cost per qualified lead on resolved cohorts**, treatment versus control, read only on click cohorts older than the account's maturity point (bounded by the 63-day attribution limit).
@@ -150,9 +151,9 @@ Design, sample-size reasoning and decision rules are in [6](06-metrics-and-exper
 
 ## 12. Rollout and kill criteria
 
-1. **Validate** with interviews first ([07](07-interview-guide.md)).
+1. **Validate** with interviews first ([07](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/07-interview-guide.md)).
 2. **Phase 0** to a small cohort of accounts with stage data; measure activation.
-3. **Phase 1** as an opt-in beta; run the experiment in [6](06-metrics-and-experiment-plan.md).
+3. **Phase 1** as an opt-in beta; run the experiment in [6](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/06-metrics-and-experiment-plan.md).
 4. **Kill or re-scope** if: interviews show a readiness diagnostic alone drives most of the behaviour (ship that, shelve the Lens); most target accounts read *Too early* on most segments; or users view the report but take no action after a full cycle.
 
-Next: [6. Metrics and experiment plan](06-metrics-and-experiment-plan.md)
+Next: [6. Metrics and experiment plan](https://github.com/Shwalak/google-ads-b2b-teardown/blob/main/docs/06-metrics-and-experiment-plan.md)

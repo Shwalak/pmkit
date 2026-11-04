@@ -1,6 +1,6 @@
 $ pmkit prd check examples/prds/lead-quality-lens-prd.md
 
-PRD check: examples/prds/lead-quality-lens-prd.md  (2,053 words)
+PRD check: examples/prds/lead-quality-lens-prd.md  (2,076 words)
 
   (11 checks passed; use --verbose to list them)
 
