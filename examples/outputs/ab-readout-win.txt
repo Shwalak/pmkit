@@ -1,0 +1,18 @@
+$ pmkit ab readout --control 200/1000 --treatment 240/1000
+
+A/B test readout (two arms, yes/no metric)
+
+              visitors  conversions     rate
+  control        1,000          200   20.00%
+  treatment      1,000          240   24.00%
+
+Difference:   +4.00 pp   (relative lift +20.0%)
+95% interval: +0.37 pp to +7.62 pp
+p-value:      0.0308   (pooled two-proportion z-test, two-sided)
+Split check:  ok   (sample ratio mismatch p = 1)
+
+Reading: Treatment is statistically better than control: +4.00 pp (95% CI: +0.37 pp to +7.62 pp, p = 0.0308).
+
+Valid if: the sample size was fixed in advance, you looked at the data once, this is the one primary
+metric, and each user appears once. Peeking early, testing many metrics or repeat users make the
+p-value look better than it is.

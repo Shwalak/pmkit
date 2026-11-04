@@ -1,0 +1,8 @@
+$ pmkit prd check examples/prds/lead-quality-lens-prd.md
+
+PRD check: examples/prds/lead-quality-lens-prd.md  (2,053 words)
+
+  (11 checks passed; use --verbose to list them)
+
+Result: 0 fail, 0 warn, 11 pass
+This checks structure and common omissions. It cannot tell you whether the PRD is any good.

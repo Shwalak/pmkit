@@ -1,0 +1,9 @@
+$ pmkit ab size --baseline 0.10 --mde-rel 0.20 --daily-visitors 800
+
+To detect a change from 10.00% to 12.00% (+2.00 pp), alpha 0.05, power 80%:
+
+  Visitors per arm: 3,841
+  Visitors total:   7,682
+  Duration:         10 days at 800 visitors/day (both arms combined)
+
+Run for whole weeks if behaviour differs by day of week, and decide the sample size BEFORE you start.

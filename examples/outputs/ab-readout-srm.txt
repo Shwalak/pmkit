@@ -1,0 +1,18 @@
+$ pmkit ab readout --control 500/5000 --treatment 700/5400
+
+A/B test readout (two arms, yes/no metric)
+
+              visitors  conversions     rate
+  control        5,000          500   10.00%
+  treatment      5,400          700   12.96%
+
+Difference:   +2.96 pp   (relative lift +29.6%)
+95% interval: +1.74 pp to +4.18 pp
+p-value:      0.0000   (pooled two-proportion z-test, two-sided)
+Split check:  ALERT   (sample ratio mismatch p = 8.77e-05)
+
+Reading: Do not trust this result. The split of visitors between arms looks wrong (sample ratio mismatch, p = 8.8e-05). Find out why before reading anything else.
+
+Valid if: the sample size was fixed in advance, you looked at the data once, this is the one primary
+metric, and each user appears once. Peeking early, testing many metrics or repeat users make the
+p-value look better than it is.

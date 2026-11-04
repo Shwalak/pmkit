@@ -75,7 +75,8 @@ _BRACKETED = re.compile(r"\[[^\]]*\]")
 
 
 def _has_number(text: str) -> bool:
-    """True if the text states a number. Digits inside [unfilled placeholders] or link URLs do not count."""
+    """True if the text states a number. Digits in [unfilled placeholders], link URLs and list numbering do not count."""
+    text = re.sub(r"(?m)^\s*\d+[.)]\s+", "", text)  # "1. " list numbering is not a quantity
     return bool(re.search(r"\d", _BRACKETED.sub(" ", _LINK.sub(" ", text))))
 
 
@@ -180,9 +181,9 @@ def check_prd(text: str) -> list[Finding]:
         if m:
             findings.append(Finding(WARN, "placeholder", f'Unfinished placeholder "{m.group(0)}".', n))
 
-    # 5. Vague language with no measure, in goals and metrics only
+    # 5. Vague language with no measure, in goals, metrics and requirements
     vague: list[Finding] = []
-    for cat in ("goals", "metrics"):
+    for cat in ("goals", "metrics", "requirements"):
         for s in _find(sections, cat):
             for n, line in s.lines:
                 if HEADING.match(line) or BOLD_LINE.match(line):
@@ -198,7 +199,7 @@ def check_prd(text: str) -> list[Finding]:
             unique.append(f)
     findings.extend(unique[:6])
     if len(unique) > 6:
-        findings.append(Finding(WARN, "vague", f"...and {len(unique) - 6} more vague lines in goals and metrics."))
+        findings.append(Finding(WARN, "vague", f"...and {len(unique) - 6} more vague lines in goals, metrics and requirements."))
 
     # 6. Thin document
     if total_words < 150:

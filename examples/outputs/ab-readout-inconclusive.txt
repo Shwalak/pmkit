@@ -1,0 +1,18 @@
+$ pmkit ab readout --control 200/1000 --treatment 205/1000
+
+A/B test readout (two arms, yes/no metric)
+
+              visitors  conversions     rate
+  control        1,000          200   20.00%
+  treatment      1,000          205   20.50%
+
+Difference:   +0.50 pp   (relative lift +2.5%)
+95% interval: -3.02 pp to +4.02 pp
+p-value:      0.7808   (pooled two-proportion z-test, two-sided)
+Split check:  ok   (sample ratio mismatch p = 1)
+
+Reading: No statistically significant difference (+0.50 pp, 95% CI: -3.02 pp to +4.02 pp, p = 0.781). That is not evidence of no effect: with this much data the test could only reliably detect a change of about 5.24 pp or more.
+
+Valid if: the sample size was fixed in advance, you looked at the data once, this is the one primary
+metric, and each user appears once. Peeking early, testing many metrics or repeat users make the
+p-value look better than it is.

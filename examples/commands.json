@@ -1,0 +1,10 @@
+{
+  "ab-readout-win":          ["ab", "readout", "--control", "200/1000", "--treatment", "240/1000"],
+  "ab-readout-inconclusive": ["ab", "readout", "--control", "200/1000", "--treatment", "205/1000"],
+  "ab-readout-srm":          ["ab", "readout", "--control", "500/5000", "--treatment", "700/5400"],
+  "ab-size":                 ["ab", "size", "--baseline", "0.10", "--mde-rel", "0.20", "--daily-visitors", "800"],
+  "ab-mde":                  ["ab", "mde", "--baseline", "0.20", "--n-per-arm", "1000"],
+  "prd-check-weak":          ["prd", "check", "examples/prds/weak-example.md"],
+  "prd-check-shipgate":      ["prd", "check", "examples/prds/shipgate-prd.md"],
+  "prd-check-lens":          ["prd", "check", "examples/prds/lead-quality-lens-prd.md"]
+}

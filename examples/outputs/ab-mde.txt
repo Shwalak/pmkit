@@ -1,0 +1,3 @@
+$ pmkit ab mde --baseline 0.20 --n-per-arm 1000
+
+With 1,000 visitors per arm and a 20.00% baseline, the test can reliably (80% power) detect an increase of about 5.24 pp or more (to 25.24%). Smaller real effects will often be missed.

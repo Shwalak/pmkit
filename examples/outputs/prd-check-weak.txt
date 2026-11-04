@@ -1,0 +1,22 @@
+$ pmkit prd check examples/prds/weak-example.md
+
+PRD check: examples/prds/weak-example.md  (65 words)
+
+  FAIL           [section] No problem section found.
+  FAIL           [section] No users section found.
+  FAIL           [section] No goals section found.
+  FAIL           [section] No non-goals section found.
+  FAIL           [section] No risks section found.
+  FAIL  line 12  [metrics] Success metrics contain no numbers. State a baseline and a target (or say explicitly that the baseline is unknown).
+  WARN           [section] No open questions section found.
+  WARN           [section] No rollout section found.
+  WARN           [length] Only 40 words. Too thin to align a team.
+  WARN  line 5   [placeholder] Unfinished placeholder "TBD".
+  WARN  line 8   [vague] "Fast" with no measure: "Fast charts"
+  WARN  line 9   [vague] "Intuitive" with no measure: "Intuitive filters"
+  WARN  line 10  [vague] "Improve" with no measure: "Improve the user experience"
+  WARN  line 12  [metrics] No guardrail metric mentioned: what must not get worse while the primary metric improves?
+  (2 checks passed; use --verbose to list them)
+
+Result: 6 fail, 8 warn, 2 pass
+This checks structure and common omissions. It cannot tell you whether the PRD is any good.

@@ -129,3 +129,14 @@ def test_digits_inside_unfilled_placeholders_do_not_count_as_numbers():
 def test_digits_in_link_urls_do_not_count_as_numbers():
     doc = "# X\n\n## Success metrics\nSee [the plan](docs/06-metrics.md) for how we will know it worked well enough.\n"
     assert any(f.check == "metrics" and f.status == FAIL and "no numbers" in f.message for f in check_prd(doc))
+
+
+def test_vague_requirements_are_flagged_too():
+    doc = GOOD.replace("1. Single-page payment form with inline validation.", "1. A fast, intuitive payment form.")
+    vague = by_check(check_prd(doc), "vague")
+    assert vague and any("fast" in f.message.lower() for f in vague)
+
+
+def test_numbered_list_markers_do_not_count_as_numbers_in_metrics():
+    doc = "# X\n\n## Success metrics\n1. Users are happy with the new checkout overall.\n2. Support is happier too.\n"
+    assert any(f.check == "metrics" and f.status == FAIL and "no numbers" in f.message for f in check_prd(doc))
