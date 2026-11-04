@@ -20,5 +20,8 @@ pmkit = "pmkit.cli:main"
 [tool.setuptools]
 packages = ["pmkit"]
 
+[tool.setuptools.package-data]
+pmkit = ["prd_template.md"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

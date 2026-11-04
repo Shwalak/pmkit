@@ -7,6 +7,8 @@ import dataclasses
 import json
 import math
 import sys
+from importlib import resources
+from pathlib import Path
 
 from . import __version__
 from .abtest import (
@@ -17,6 +19,7 @@ from .abtest import (
     readout,
     sample_size_per_arm,
 )
+from .prd import FAIL, PASS, WARN, check_prd, summarize
 
 ASSUMPTIONS = (
     "Valid if: the sample size was fixed in advance, you looked at the data once, this is the one primary\n"
@@ -132,6 +135,45 @@ def cmd_mde(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_prd_check(args: argparse.Namespace) -> int:
+    path = Path(args.file)
+    try:
+        text = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        raise ValueError(f"file not found: {path}") from None
+    findings = check_prd(text)
+    counts = summarize(findings)
+    if args.json:
+        print(json.dumps({"file": str(path), "summary": counts,
+                          "findings": [dataclasses.asdict(f) for f in findings]}, indent=2))
+    else:
+        words = len(text.split())
+        print(f"PRD check: {path}  ({words:,} words)\n")
+        shown = findings if args.verbose else [f for f in findings if f.status != PASS]
+        for f in shown:
+            where = f"line {f.line}" if f.line else "       "
+            print(f"  {f.status.upper():4}  {where:<8} [{f.check}] {f.message}")
+        if not args.verbose and counts[PASS]:
+            print(f"  ({counts[PASS]} checks passed; use --verbose to list them)")
+        print(f"\nResult: {counts[FAIL]} fail, {counts[WARN]} warn, {counts[PASS]} pass")
+        print("This checks structure and common omissions. It cannot tell you whether the PRD is any good.")
+    return 1 if counts[FAIL] or (args.strict and counts[WARN]) else 0
+
+
+def cmd_prd_new(args: argparse.Namespace) -> int:
+    template = resources.files("pmkit").joinpath("prd_template.md").read_text(encoding="utf-8")
+    content = template.replace("{title}", args.title)
+    if args.out is None:
+        print(content, end="")
+        return 0
+    out = Path(args.out)
+    if out.exists() and not args.force:
+        raise ValueError(f"{out} already exists; use --force to overwrite")
+    out.write_text(content, encoding="utf-8")
+    print(f"Wrote {out}. Fill in the [placeholders], then run: pmkit prd check {out}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="pmkit", description="A small, tested toolkit for product managers.")
     parser.add_argument("--version", action="version", version=f"pmkit {__version__}")
@@ -164,6 +206,20 @@ def build_parser() -> argparse.ArgumentParser:
     m.add_argument("--power", type=float, default=0.80)
     m.add_argument("--json", action="store_true")
     m.set_defaults(func=cmd_mde)
+
+    prd = top.add_parser("prd", help="PRD template and checker").add_subparsers(dest="command", required=True)
+    c = prd.add_parser("check", help="check a PRD (Markdown) for missing sections and common problems")
+    c.add_argument("file")
+    c.add_argument("--strict", action="store_true", help="exit non-zero on warnings as well as failures")
+    c.add_argument("--verbose", "-v", action="store_true", help="also list passed checks")
+    c.add_argument("--json", action="store_true")
+    c.set_defaults(func=cmd_prd_check)
+
+    n = prd.add_parser("new", help="start a PRD from the template")
+    n.add_argument("--title", default="Untitled PRD")
+    n.add_argument("--out", help="write to this file instead of printing")
+    n.add_argument("--force", action="store_true", help="overwrite an existing file")
+    n.set_defaults(func=cmd_prd_new)
     return parser
 
 

@@ -70,6 +70,15 @@ class Section:
         return len(re.findall(r"[A-Za-z0-9%$]+", self.text))
 
 
+_LINK = re.compile(r"\[[^\]]*\]\([^)]*\)")
+_BRACKETED = re.compile(r"\[[^\]]*\]")
+
+
+def _has_number(text: str) -> bool:
+    """True if the text states a number. Digits inside [unfilled placeholders] or link URLs do not count."""
+    return bool(re.search(r"\d", _BRACKETED.sub(" ", _LINK.sub(" ", text))))
+
+
 def _blank_html_comments(text: str) -> str:
     """Remove <!-- comments --> but keep line numbers stable."""
     return HTML_COMMENT.sub(lambda m: "\n" * m.group(0).count("\n"), text)
@@ -147,7 +156,7 @@ def check_prd(text: str) -> list[Finding]:
     for s in _find(sections, "metrics"):
         if _meaningful_words(s) < 6:
             continue
-        if not re.search(r"\d", s.text):
+        if not _has_number(s.text):
             findings.append(Finding(FAIL, "metrics", "Success metrics contain no numbers. State a baseline and a target "
                                     "(or say explicitly that the baseline is unknown).", s.line))
         else:
@@ -179,7 +188,7 @@ def check_prd(text: str) -> list[Finding]:
                 if HEADING.match(line) or BOLD_LINE.match(line):
                     continue
                 m = VAGUE.search(line)
-                if m and not re.search(r"\d", line):
+                if m and not _has_number(line):
                     snippet = line.strip().lstrip("-*0123456789. ").strip()
                     vague.append(Finding(WARN, "vague", f'"{m.group(0)}" with no measure: "{snippet[:80]}"', n))
     seen, unique = set(), []

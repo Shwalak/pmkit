@@ -119,3 +119,13 @@ def test_a_bare_success_heading_is_treated_as_the_metrics_section():
     doc = "# X\n\n## Success\nWe will know it worked when users are happy with the new experience overall.\n"
     findings = check_prd(doc)
     assert any(f.check == "metrics" and f.status == FAIL and "no numbers" in f.message for f in findings)
+
+
+def test_digits_inside_unfilled_placeholders_do_not_count_as_numbers():
+    doc = "# X\n\n## Success metrics\n**Primary:** [metric], baseline [value or unknown, measured in week 1], target [value].\n"
+    assert any(f.check == "metrics" and f.status == FAIL and "no numbers" in f.message for f in check_prd(doc))
+
+
+def test_digits_in_link_urls_do_not_count_as_numbers():
+    doc = "# X\n\n## Success metrics\nSee [the plan](docs/06-metrics.md) for how we will know it worked well enough.\n"
+    assert any(f.check == "metrics" and f.status == FAIL and "no numbers" in f.message for f in check_prd(doc))
