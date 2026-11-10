@@ -174,7 +174,7 @@ Run the tests with `pip install -e ".[dev]" && pytest`.
 
 ## About
 
-Designed and specified by Saksham as an AI and technical product manager portfolio project, and implemented with Claude Code. The checks, the verdict rules and the decisions about what to refuse to say are the product thinking; the tests and the validation are the evidence it works.
+Designed and specified by Saksham as an AI and technical product manager portfolio project. The checks, the verdict rules and the decisions about what to refuse to say are the product thinking; the tests and the validation are the evidence it works.
 
 ## License
 
